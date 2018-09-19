@@ -5,15 +5,15 @@ This SDK enables sendOTP and allows you to send OTP
 ### Set-up:
 
 1. Download the NPM module
-```
+```node
 npm install sendotp --save
 ```
 2. Require the package in your code.
-```
+```javascript
 const SendOtp = require('sendotp');
 ```
 3. Initialize with your [MSG91](https://msg91.com) auth key
-```
+```javascript
 const sendOtp = new SendOtp('AuthKey');
 ```
 That's all, your SDK is set up!
@@ -36,24 +36,40 @@ Error object sample code
 
 ### Usage:
 
-To send OTP, without optional parameters
+##### To send OTP
+
 ```javascript
 sendOtp.send("919999999999", "PRIIND", function (error, data) {
   console.log(data);
 });
 ```
 
-To send OTP, with optional parameters
+##### To send Custom OTP
+
+Make sure OTP code length is set using `setOtpLength(otp_length)` where `otp_length` is same as length of custom OTP code.
 ```javascript
 sendOtp.send("919999999999", "PRIIND", "4635", function (error, data) {
   console.log(data);
 });
 ```
 
-If you want to set custom expiry of OTP verification  
+##### Optional settings.
+
+Set OTP Expiry
 ```javascript
-sendOtp.setOtpExpiry('90'); //in minutes
+sendOtp.setOtpExpiry(otp_expiry); // otp_expiry is number of minutes (default: 1440, max: 1440, min: 1)`
 ```
+Set OTP Length
+```javascript
+sendOtp.setOtpLength(otp_length); // otp_length is number (default: 4, max: 9, min: 4)
+```
+Set OTP Template
+```javascript
+sendOtp.setOtpTemplate(template); // template is string. 
+```
+**Important:** placeholder is ##OTP## (ex. `Your otp is ##OTP##.`)
+Placeholder is required in template string which will be replaced with actual OTP by library.
+
 
 To retry OTP
 ```javascript
